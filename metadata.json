@@ -1,0 +1,6 @@
+{
+  "name": "Moiz-Education-App",
+  "description": "Welcome to Moiz World! A cheerful and colorful educational sandbox for kids with a Nursery Book, circular alphabet explorers, a drawing school, and games.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
