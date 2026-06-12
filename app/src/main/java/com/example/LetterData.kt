@@ -668,7 +668,7 @@ object LetterRepository {
             'N' -> info.copy(word = "Nose", emoji = "👃", phonics = "N for Nose")
             'O' -> info.copy(word = "Owl", emoji = "🦉", phonics = "O for Owl")
             'P' -> info.copy(word = "Pencil", emoji = "✏️", phonics = "P for Pencil")
-            'Q' -> info.copy(word = "Queen", emoji = "👸", phonics = "Q for Queen")
+            'Q' -> info.copy(word = "Queen", emoji = "👑", phonics = "Q for Queen")
             'R' -> info.copy(word = "Rain", emoji = "🌧️", phonics = "R for Rain")
             'S' -> info.copy(word = "Sun", emoji = "☀️", phonics = "S for Sun")
             'T' -> info.copy(word = "Train", emoji = "🚂", phonics = "T for Train")

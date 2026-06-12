@@ -10,6 +10,9 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -239,7 +242,7 @@ class MainActivity : ComponentActivity() {
                 ttsReady.value = true
                 
                 // Greeting Phonics intro
-                sayWord("Welcome to Moiz Education App! Best Education app for age upto 8 years. App Developed by G.Abbas and Dedicated to Sindh Public School, Larkana")
+                sayWord("Welcome to Moiz Education App! Education, Fun, Entertainment")
             }
         }
 
@@ -291,7 +294,7 @@ class MainActivity : ComponentActivity() {
                                          sayWord(modeSpeech)
                                      },
                                      onGreetClick = {
-                                         sayWord("Welcome to Moiz Education App! Best Education app for age upto 8 years. App Developed by G.Abbas and Dedicated to Sindh Public School, Larkana")
+                                         sayWord("Welcome to Moiz Education App! Education, Fun, Entertainment")
                                      }
                                  )
                              }
@@ -463,7 +466,7 @@ fun HeaderMascotCard(
 
                 Spacer(modifier = Modifier.width(14.dp))
 
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Moiz Education App 👦✨",
                         fontSize = 18.sp,
@@ -478,7 +481,7 @@ fun HeaderMascotCard(
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Pre-School, Nursery, KG, One etc. • Education - Fun - Entertainment",
+                        text = "Specially Designed for Pre-School, Nursery, KG, One - Focusing on A-Z letters and 1-20 Numbers and Games",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.65f)
@@ -2489,12 +2492,12 @@ fun GamesSandbox(
                 )
 
                 GameLobbyCard(
-                    title = "🧁 Feed Hungry Moiz!",
-                    desc = "Help feed Moiz tasty treats starting with specified phonics!",
-                    containerColor = Color(0xFFFFECEF),
+                    title = "📸 Moiz's Phonics Album!",
+                    desc = "Help Moiz collect school objects and animals for his ABC photo scrapbook!",
+                    containerColor = Color(0xFFE6FFFA),
                     onPlay = {
                         gameMode = 2
-                        onSpeak("Feed Moiz treats starting with the letter!")
+                        onSpeak("Help Moiz collect scrapbook pictures starting with the target letter!")
                     },
                     tag = "feed_game_lobby"
                 )
@@ -2808,7 +2811,7 @@ fun BalloonPopGame(
 }
 
 // ==========================================
-// GAME 2: FEED HUNGRY MOIZ!
+// GAME 2: MOIZ'S PHONICS PICTURE SCRAPBOOK!
 // ==========================================
 
 @Composable
@@ -2834,11 +2837,11 @@ fun FeedMoizGame(
     }
 
     var feedingSuccessTrigger by remember { mutableStateOf(false) }
-    var promptCaption by remember { mutableStateOf("A treat starting with '${activeLevelLetter.char}'!") }
+    var promptCaption by remember { mutableStateOf("Match a picture starting with '${activeLevelLetter.char}'!") }
 
     LaunchedEffect(activeLevelLetter.char) {
-        onSpeak("Moiz wants a treat starting with ${activeLevelLetter.char}!")
-        promptCaption = "A treat starting with '${activeLevelLetter.char}'!"
+        onSpeak("Find the picture starting with the letter ${activeLevelLetter.char}!")
+        promptCaption = "Match a picture starting with '${activeLevelLetter.char}'!"
         feedingSuccessTrigger = false
     }
 
@@ -2848,8 +2851,8 @@ fun FeedMoizGame(
             .shadow(4.dp, RoundedCornerShape(24.dp))
             .testTag("feed_game_canvas"),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF5F5)),
-        border = BorderStroke(1.5.dp, Color(0xFFFEB2B2))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE6FFFA)),
+        border = BorderStroke(1.5.dp, Color(0xFFB2F5EA))
     ) {
         Column(
             modifier = Modifier
@@ -2858,10 +2861,10 @@ fun FeedMoizGame(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Feed Hungry Mascot Moiz! 🧁👦",
+                text = "Moiz's Phonics Scrapbook! 📸👦",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Black,
-                color = Color(0xFFC53030)
+                color = Color(0xFF008080)
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -2872,12 +2875,12 @@ fun FeedMoizGame(
                     .size(110.dp)
                     .clip(CircleShape)
                     .background(Color.White)
-                    .border(3.dp, if (feedingSuccessTrigger) Color(0xFF2ECC71) else Color(0xFFE2E8F0), CircleShape),
+                    .border(3.dp, if (feedingSuccessTrigger) Color(0xFF2ECC71) else Color(0xFF319795), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.img_moiz),
-                    contentDescription = "Moiz Mascot feeding animation",
+                    contentDescription = "Moiz Scrapbook Photo Album Mascot",
                     modifier = Modifier.fillMaxSize().clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
@@ -2886,10 +2889,10 @@ fun FeedMoizGame(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = if (feedingSuccessTrigger) "Moiz: 'YUMMY! Thank you! 😋'" else "Moiz: 'I am hungry! Quick!'",
+                text = if (feedingSuccessTrigger) "Moiz: 'WOW! Awesome picture! 🌟'" else "Moiz: 'Let's find pictures for my school scrapbook!'",
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Black,
-                color = if (feedingSuccessTrigger) Color(0xFF27AE60) else Color(0xFFC53030)
+                color = if (feedingSuccessTrigger) Color(0xFF27AE60) else Color(0xFF008080)
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -2898,11 +2901,11 @@ fun FeedMoizGame(
             Card(
                 modifier = Modifier
                     .fillMaxWidth(0.92f)
-                    .clickable { onSpeak("Feed Moiz a treat starting with the letter ${activeLevelLetter.char}!") }
+                    .clickable { onSpeak("Find the picture starting with the letter ${activeLevelLetter.char}!") }
                     .shadow(4.dp, RoundedCornerShape(18.dp)),
                 shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF5F5)),
-                border = BorderStroke(2.5.dp, Color(0xFFFEB2B2))
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = BorderStroke(2.5.dp, Color(0xFFB2F5EA))
             ) {
                 Row(
                     modifier = Modifier.padding(10.dp).fillMaxWidth(),
@@ -2910,10 +2913,10 @@ fun FeedMoizGame(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "🔊 FEED MOIZ: ",
+                        text = "🔊 FIND PICTURE: ",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color(0xFFC53030)
+                        color = Color(0xFF008080)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Card(
@@ -2921,15 +2924,15 @@ fun FeedMoizGame(
                             .size(46.dp)
                             .shadow(4.dp, CircleShape),
                         shape = CircleShape,
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        border = BorderStroke(3.dp, Color(0xFFC53030))
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE6FFFA)),
+                        border = BorderStroke(3.dp, Color(0xFF319795))
                     ) {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                             Text(
                                 text = activeLevelLetter.char.toString(),
                                 fontSize = 26.sp,
                                 fontWeight = FontWeight.Black,
-                                color = Color(0xFFC53030)
+                                color = Color(0xFF319795)
                             )
                         }
                     }
@@ -2942,7 +2945,7 @@ fun FeedMoizGame(
                 text = promptCaption,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF7F8C8D),
+                color = Color(0xFF4A5568),
                 textAlign = TextAlign.Center
             )
 
@@ -2961,15 +2964,15 @@ fun FeedMoizGame(
                             if (feedingSuccessTrigger) return@Button
                             if (isCorrect) {
                                 feedingSuccessTrigger = true
-                                promptCaption = "AMAZING! Fed Moiz ${activeLevelLetter.word}!"
-                                onSpeak("Yummy! Thank you for the ${activeLevelLetter.word}!")
+                                promptCaption = "AMAZING! Collected ${activeLevelLetter.word}!"
+                                onSpeak("Perfect! ${activeLevelLetter.word} starts with the letter ${activeLevelLetter.char}!")
 
                                 android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                                     levelIndex = (levelIndex + 1) % itemsPool.size
                                     feedingSuccessTrigger = false
                                 }, 2500)
                             } else {
-                                promptCaption = "Oops! That food doesn't start with ${activeLevelLetter.char}!"
+                                promptCaption = "Oops! That item doesn't start with ${activeLevelLetter.char}!"
                                 onSpeak("No, try again!")
                             }
                         },
@@ -3218,7 +3221,15 @@ fun MemoryMatchGame(
                                             // Flip up clicked target card with copy-on-write
                                             val flippedCard = card.copy(isFaceUp = true)
                                             cardsList[index] = flippedCard
-                                            onSpeak(flippedCard.content)
+                                            
+                                            // Look up clean phonics pronunciation instead of reading raw emoji code
+                                            val letterInfo = LetterRepository.letters.find { it.char.toString().equals(flippedCard.matchKey, ignoreCase = true) }
+                                            val speechText = if (flippedCard.content == flippedCard.matchKey) {
+                                                "Letter ${flippedCard.matchKey}"
+                                            } else {
+                                                if (letterInfo != null) "${flippedCard.matchKey} is for ${letterInfo.word}" else flippedCard.content
+                                            }
+                                            onSpeak(speechText)
 
                                             if (selectedFirstIndex == null) {
                                                 selectedFirstIndex = index
@@ -3233,8 +3244,10 @@ fun MemoryMatchGame(
                                                 if (firstCard.matchKey == flippedCard.matchKey) {
                                                     cardsList[firstIdx] = firstCard.copy(isMatched = true)
                                                     cardsList[secondIdx] = flippedCard.copy(isMatched = true)
+                                                    
+                                                    val matchedWordText = letterInfo?.word ?: ""
                                                     gameplayInfoText = "Hurray! Matched letter ${flippedCard.matchKey}! 🎉"
-                                                    onSpeak("Match!")
+                                                    onSpeak("Match! ${flippedCard.matchKey} is for $matchedWordText")
                                                     selectedFirstIndex = null
                                                     selectedSecondIndex = null
                                                     freezeTapClicks = false
@@ -3260,7 +3273,7 @@ fun MemoryMatchGame(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     if (isRevealed) {
-                                        Text(text = card.content, fontSize = 28.sp, fontWeight = FontWeight.Black)
+                                        Text(text = card.content, fontSize = 28.sp, fontWeight = FontWeight.Black, color = Color(0xFF1E1530))
                                     } else {
                                         Text(text = "❓", fontSize = 22.sp, color = Color.White)
                                     }
@@ -3479,6 +3492,7 @@ fun FloatingPhonicsBallsGame(
     var score by remember { mutableStateOf(0) }
     var gameStarted by remember { mutableStateOf(true) }
     var gameSpeedFactor by remember { mutableStateOf(1.1f) } // 1f: Normal, 1.8f: Speedy, 0.6f: Slow
+    var selectedTargetLetter by remember { mutableStateOf<Char?>(null) }
 
     val ballsList = remember { mutableStateListOf<FloatingBall>() }
     val particleEffects = remember { mutableStateListOf<Pair<Offset, Color>>() }
@@ -3568,7 +3582,7 @@ fun FloatingPhonicsBallsGame(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Floating Phonics Balls 🔮✨",
                         fontSize = 15.sp,
@@ -3576,11 +3590,14 @@ fun FloatingPhonicsBallsGame(
                         color = Color(0xFF008080)
                     )
                     Text(
-                        text = "Tap balls to pop, hear letters, and learn!",
+                        text = if (selectedTargetLetter == null) "Tap balls to pop, hear letters, and learn!" else "Target Letter: Pop the $selectedTargetLetter balloons! 🎯",
                         fontSize = 11.sp,
-                        color = Color(0xFF4A5568)
+                        fontWeight = if (selectedTargetLetter == null) FontWeight.Normal else FontWeight.Bold,
+                        color = if (selectedTargetLetter == null) Color(0xFF4A5568) else Color(0xFF2C7A7B)
                     )
                 }
+
+                Spacer(modifier = Modifier.width(6.dp))
 
                 // Beautiful Score badge
                 Box(
@@ -3594,6 +3611,79 @@ fun FloatingPhonicsBallsGame(
                         fontWeight = FontWeight.Black,
                         color = Color.White
                     )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Choose which letters to learn to show in heading
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = "Learn:",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Black,
+                    color = Color(0xFF008080)
+                )
+
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    item {
+                        val isAllSelected = selectedTargetLetter == null
+                        Button(
+                            onClick = {
+                                selectedTargetLetter = null
+                                onSpeak("Learn all letters!")
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isAllSelected) Color(0xFF008080) else Color.White,
+                                contentColor = if (isAllSelected) Color.White else Color(0xFF008080)
+                            ),
+                            modifier = Modifier.height(26.dp).border(1.dp, Color(0xFFB2F5EA), RoundedCornerShape(6.dp)),
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                            shape = RoundedCornerShape(6.dp)
+                        ) {
+                            Text("All 🌈", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+
+                    items(('A'..'Z').toList()) { char ->
+                        val isSelected = selectedTargetLetter == char
+                        Button(
+                            onClick = {
+                                selectedTargetLetter = char
+                                onSpeak("Find the letter $char balloons!")
+                                // Immediately spawn two dedicated letter balls so child gets immediate feedback
+                                repeat(2) {
+                                    ballsList.add(
+                                        FloatingBall(
+                                            id = (0..100000).random(),
+                                            char = char,
+                                            xPercent = (15..85).random().toFloat(),
+                                            yPercent = 110f + (0..20).random().toFloat(),
+                                            speed = (12..25).random() / 10f,
+                                            color = colorsList.random(),
+                                            sizeDp = (58..72).random()
+                                        )
+                                    )
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isSelected) Color(0xFF319795) else Color.White,
+                                contentColor = if (isSelected) Color.White else Color(0xFF008080)
+                            ),
+                            modifier = Modifier.height(26.dp).border(1.dp, Color(0xFFB2F5EA), RoundedCornerShape(6.dp)),
+                            contentPadding = PaddingValues(horizontal = 6.dp, vertical = 0.dp),
+                            shape = RoundedCornerShape(6.dp)
+                        ) {
+                            Text(char.toString(), fontSize = 11.sp, fontWeight = FontWeight.Black)
+                        }
+                    }
                 }
             }
 
@@ -3643,6 +3733,7 @@ fun FloatingPhonicsBallsGame(
             Spacer(modifier = Modifier.height(10.dp))
 
             // The Canvas visual physics container
+            val currentDensity = androidx.compose.ui.platform.LocalDensity.current
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -3657,7 +3748,67 @@ fun FloatingPhonicsBallsGame(
 
                 // Custom popping explosion loop
                 Canvas(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pointerInput(ballsList, selectedTargetLetter) {
+                            detectTapGestures { tapOffset ->
+                                val densityVal = currentDensity.density
+                                val tapXDp = tapOffset.x / densityVal
+                                val tapYDp = tapOffset.y / densityVal
+
+                                // Find closest ball with a generous click radius (no layouts lag!)
+                                var clickedBall: FloatingBall? = null
+                                var bestDistance = Float.MAX_VALUE
+                                ballsList.forEach { ball ->
+                                    val ballXDp = (ball.xPercent / 100f) * containerWidth.value
+                                    val ballYDp = (ball.yPercent / 100f) * containerHeight.value
+                                    val dx = tapXDp - ballXDp
+                                    val dy = tapYDp - ballYDp
+                                    val distanceDp = kotlin.math.sqrt((dx * dx + dy * dy).toDouble()).toFloat()
+                                    val hitTargetRadius = ball.sizeDp * 1.25f // Generous boundaries
+                                    if (distanceDp < hitTargetRadius && distanceDp < bestDistance) {
+                                        bestDistance = distanceDp
+                                        clickedBall = ball
+                                    }
+                                }
+
+                                val ballToPop = clickedBall
+                                if (ballToPop != null) {
+                                    val target = selectedTargetLetter
+                                    if (target == null || ballToPop.char == target) {
+                                        score += 1
+                                        val letterItem = LetterRepository.letters.find { it.char == ballToPop.char }
+                                        val speakText = if (letterItem != null) {
+                                            "${ballToPop.char}! ${letterItem.char} is for ${letterItem.word}!"
+                                        } else {
+                                            "${ballToPop.char} popped!"
+                                        }
+                                        onSpeak(speakText)
+
+                                        // Add burst particles
+                                        val partX = (ballToPop.xPercent / 100f) * constraints.maxWidth.toFloat()
+                                        val partY = (ballToPop.yPercent / 100f) * constraints.maxHeight.toFloat()
+                                        particleEffects.add(Offset(partX, partY) to ballToPop.color)
+
+                                        ballsList.remove(ballToPop)
+                                        
+                                        // If learning a target letter, spawn that letter often
+                                        val shouldSpawnTarget = target != null && (0..100).random() < 55
+                                        if (shouldSpawnTarget && target != null) {
+                                            val randomX = (10..90).random().toFloat()
+                                            val randomSpeed = (12..25).random() / 10f
+                                            val randomColor = colorsList.random()
+                                            val randomSize = (56..72).random()
+                                            ballsList.add(FloatingBall((0..100000).random(), target, randomX, 115f, randomSpeed, randomColor, randomSize))
+                                        } else {
+                                            spawnBall()
+                                        }
+                                    } else {
+                                        onSpeak("This is letter ${ballToPop.char}. Find the letter $target balloons!")
+                                    }
+                                }
+                            }
+                        }
                 ) {
                     // Draw popped particles
                     particleEffects.forEach { effect ->
@@ -3694,29 +3845,7 @@ fun FloatingPhonicsBallsGame(
                                     colors = listOf(ball.color.copy(alpha = 0.4f), ball.color)
                                 )
                             )
-                            .border(2.5.dp, Color.White.copy(alpha = 0.9f), CircleShape)
-                            .clickable {
-                                // POP THE BALL!
-                                score += 1
-                                val letterItem = LetterRepository.letters.firstOrNull { it.char == ball.char }
-                                val speakText = if (letterItem != null) {
-                                    "${ball.char}! ${letterItem.char} is for ${letterItem.word}!"
-                                } else {
-                                    "${ball.char} popped!"
-                                }
-                                onSpeak(speakText)
-
-                                // Add pop burst particles at popped location coordinate
-                                val particlePt = Offset(
-                                    x = (ball.xPercent / 100f) * constraints.maxWidth.toFloat(),
-                                    y = (ball.yPercent / 100f) * constraints.maxHeight.toFloat()
-                                )
-                                particleEffects.add(particlePt to ball.color)
-
-                                // Replace with a fresh spawned ball at bottom
-                                ballsList.remove(ball)
-                                spawnBall()
-                            },
+                            .border(2.5.dp, Color.White.copy(alpha = 0.9f), CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -3790,7 +3919,7 @@ fun FloatingPhonicsBallsGame(
 fun DrawLinesMatchingGame(
     onSpeak: (String) -> Unit
 ) {
-    // 4 matches: A -> 🍎 Apple, B -> ⚽ Ball, C -> 🐱 Cat, D -> 🐶 Dog
+    // Matches dynamic chunk of letters to dynamic objects
     data class MatchNode(
         val char: Char,
         val label: String,
@@ -3798,23 +3927,36 @@ fun DrawLinesMatchingGame(
         val targetLabel: String
     )
 
-    val sourceNodes = remember {
+    // Define 7 dynamic groups covering A to Z
+    val letterGroups = remember {
         listOf(
-            MatchNode('A', "Letter A", "🍎", "Apple"),
-            MatchNode('B', "Letter B", "⚽", "Ball"),
-            MatchNode('C', "Letter C", "🐱", "Cat"),
-            MatchNode('D', "Letter D", "🐶", "Dog")
+            listOf('A', 'B', 'C', 'D'),
+            listOf('E', 'F', 'G', 'H'),
+            listOf('I', 'J', 'K', 'L'),
+            listOf('M', 'N', 'O', 'P'),
+            listOf('Q', 'R', 'S', 'T'),
+            listOf('U', 'V', 'W', 'X'),
+            listOf('Y', 'Z')
         )
     }
 
-    // Right-side object nodes (shuffled on start)
-    val rightNodes = remember {
-        listOf(
-            MatchNode('C', "Letter C", "🐱", "Cat"),
-            MatchNode('A', "Letter A", "🍎", "Apple"),
-            MatchNode('D', "Letter D", "🐶", "Dog"),
-            MatchNode('B', "Letter B", "⚽", "Ball")
-        )
+    var currentGroupIndex by remember { mutableStateOf(0) }
+    val currentLetters = remember(currentGroupIndex) { letterGroups[currentGroupIndex] }
+
+    val sourceNodes = remember(currentGroupIndex) {
+        currentLetters.map { char ->
+            val info = LetterRepository.letters.find { it.char == char }
+            MatchNode(
+                char = char,
+                label = "Letter $char",
+                emoji = info?.emoji ?: "❓",
+                targetLabel = info?.word ?: "Object"
+            )
+        }
+    }
+
+    val rightNodes = remember(currentGroupIndex) {
+        sourceNodes.shuffled()
     }
 
     // Keep track of matched links (map of Char -> Boolean indicating if successfully connected)
@@ -3828,12 +3970,12 @@ fun DrawLinesMatchingGame(
     var showConfetti by remember { mutableStateOf(false) }
 
     // Check if game is completed
-    val isCompleted = linksCompleted.size == 4
+    val isCompleted = linksCompleted.size == sourceNodes.size
 
     if (isCompleted && !showConfetti) {
         showConfetti = true
-        LaunchedEffect(Unit) {
-            onSpeak("Excellent! Excellent! You matched all letters and objects perfectly!")
+        LaunchedEffect(currentGroupIndex) {
+            onSpeak("Excellent! You matched all letters from ${currentLetters.first()} to ${currentLetters.last()}!")
         }
     }
 
@@ -3848,6 +3990,13 @@ fun DrawLinesMatchingGame(
             fontSize = 17.sp,
             fontWeight = FontWeight.Black,
             color = Color(0xFF2C3E50)
+        )
+        Text(
+            text = "Group Level ${currentGroupIndex + 1} of ${letterGroups.size}: Letters ${currentLetters.first()}-${currentLetters.last()}",
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF008080),
+            modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
             text = "Draw lines or tap a Letter and then tap its matching object!",
@@ -3888,9 +4037,9 @@ fun DrawLinesMatchingGame(
                             // Draw thick gorgeous neon line with a beautiful custom primary glow
                             drawLine(
                                 color = when (sNode.char) {
-                                    'A' -> Color(0xFFEA2027)
-                                    'B' -> Color(0xFF0984E3)
-                                    'C' -> Color(0xFF2ECC71)
+                                    'A', 'E', 'I', 'M', 'Q', 'U', 'Y' -> Color(0xFFEA2027)
+                                    'B', 'F', 'J', 'N', 'R', 'V', 'Z' -> Color(0xFF0984E3)
+                                    'C', 'G', 'K', 'O', 'S', 'W' -> Color(0xFF2ECC71)
                                     else -> Color(0xFFE056FD)
                                 },
                                 start = Offset(leftX, leftY),
@@ -4050,7 +4199,14 @@ fun DrawLinesMatchingGame(
                             modifier = Modifier.padding(20.dp)
                         ) {
                             Text("🌟 EXCELLENT! 🌟", fontSize = 28.sp, fontWeight = FontWeight.Black, color = Color(0xFFFF9F43))
-                            Text("You completed all matches!", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.DarkGray)
+                            val isLastGroup = currentGroupIndex == letterGroups.size - 1
+                            Text(
+                                text = if (isLastGroup) "You completed ALL matching letter games! 🎉" else "Level Complete! Letters ${currentLetters.first()}-${currentLetters.last()} matched!",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.DarkGray,
+                                textAlign = TextAlign.Center
+                            )
                             Spacer(modifier = Modifier.height(14.dp))
                             Text("🏆 Genius Kid Badge Unlocked!", fontSize = 13.sp, color = Color(0xFF2ECC71), fontWeight = FontWeight.Black)
 
@@ -4058,16 +4214,27 @@ fun DrawLinesMatchingGame(
 
                             Button(
                                 onClick = {
+                                    if (isLastGroup) {
+                                        currentGroupIndex = 0
+                                        onSpeak("Playing from the beginning! Match letters to objects!")
+                                    } else {
+                                        currentGroupIndex += 1
+                                        val nextLetters = letterGroups[currentGroupIndex]
+                                        onSpeak("Let's proceed to the next set: Letters ${nextLetters.first()} to ${nextLetters.last()}!")
+                                    }
                                     linksCompleted.clear()
                                     selectedLeftChar = null
                                     selectedRightChar = null
                                     showConfetti = false
-                                    onSpeak("Let's play again! Match letters to objects!")
                                 },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2ECC71)),
                                 shape = RoundedCornerShape(14.dp)
                             ) {
-                                Text("Play Again 🔄", fontSize = 13.sp, fontWeight = FontWeight.Black)
+                                Text(
+                                    text = if (isLastGroup) "Play Again 🔄" else "Next Level (${letterGroups[currentGroupIndex + 1].first()}-${letterGroups[currentGroupIndex + 1].last()}) ➡️",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Black
+                                )
                             }
                         }
                     }
@@ -4076,3 +4243,4 @@ fun DrawLinesMatchingGame(
         }
     }
 }
+
